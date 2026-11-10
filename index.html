@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Chase Koronkowski: business intelligence analyst in Atlanta building reporting automation, forecasting models and LLM tools.">
+<meta property="og:title" content="Chase Koronkowski">
+<meta property="og:description" content="BI automation, forecasting and applied AI projects.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://chasekoronkowski.github.io/">
+<meta property="og:image" content="https://chasekoronkowski.github.io/headshot.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d5c4c'/%3E%3Ctext x='16' y='22' font-family='Arial' font-weight='700' font-size='15' fill='white' text-anchor='middle'%3ECK%3C/text%3E%3C/svg%3E">
+<title>Chase Koronkowski</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one left-aligned reading column; dates and data specs set in a mono "ledger" gutter. */
+:root {
+  --bg: #f6f8f7;
+  --surface: #ffffff;
+  --fg: #16201d;
+  --muted: #5b6763;
+  --line: #d8e0dc;
+  --accent: #1d5c4c;
+  --accent-soft: #e2efe9;
+  --flag: #8a5a00;
+  --flag-soft: #fbf0d9;
+  --font-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1513; --surface: #161e1b; --fg: #e3eae7; --muted: #9aa8a3; --line: #2a3632;
+    --accent: #74c6aa; --accent-soft: #1b2e28; --flag: #f0c46b; --flag-soft: #2e2615;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1513; --surface: #161e1b; --fg: #e3eae7; --muted: #9aa8a3; --line: #2a3632;
+  --accent: #74c6aa; --accent-soft: #1b2e28; --flag: #f0c46b; --flag-soft: #2e2615;
+  color-scheme: dark;
+}
+/* Terminal skin: picked from the theme switch, layered on top of dark. */
+:root[data-skin="terminal"] {
+  --bg: #070b08; --surface: #0c130e; --fg: #c9f7cf; --muted: #6fa079; --line: #1d3323;
+  --accent: #3dff8b; --accent-soft: #0f2a19; --flag: #ffd166; --flag-soft: #2a230e;
+  --font-display: var(--font-mono); --font-body: var(--font-mono);
+  color-scheme: dark;
+}
+:root[data-skin="terminal"] body {
+  font-size: 15px;
+  background-image: repeating-linear-gradient(to bottom, rgba(61, 255, 139, .035) 0 1px, transparent 1px 3px);
+}
+:root[data-skin="terminal"] .hero h1 { font-weight: 500; letter-spacing: -.04em; }
+:root[data-skin="terminal"] .hero h1 .dot { display: none; }
+:root[data-skin="terminal"] .hero h1 > span:last-child::after { content: "_"; color: var(--accent); margin-left: .05em; }
+:root[data-skin="terminal"] .sh h2::before { content: "> "; color: var(--accent); }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-skin="terminal"] .hero h1 > span:last-child::after { animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 780px; margin: 0 auto; padding-block: 28px 72px; display: grid; gap: 64px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+.draft {
+  font: 500 13px/1.4 var(--font-mono);
+  color: var(--flag);
+  background: var(--flag-soft);
+  border: 1px dashed currentColor;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.confirm {
+  display: inline-block;
+  font: 500 11px/1 var(--font-mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--flag);
+  background: var(--flag-soft);
+  border: 1px dashed currentColor;
+  border-radius: 4px;
+  padding: 3px 6px;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+
+/* Hero */
+.hero { display: grid; gap: 18px; }
+.kicker { font: 500 13px/1 var(--font-mono); color: var(--muted); letter-spacing: .04em; }
+.topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.theme-switch { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.theme-switch button { font: 500 12.5px/1 var(--font-mono); padding: 7px 11px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+.theme-switch button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.hero h1 { font-size: clamp(3rem, 12vw, 5.75rem); font-weight: 800; letter-spacing: -.045em; line-height: .9; margin-top: 6px; }
+.hero h1 span { display: block; }
+.hero-id { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 20px; }
+.headshot { width: clamp(96px, 20vw, 152px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); background: var(--surface); }
+@media (max-width: 560px) { .hero-id { grid-template-columns: 1fr; } .headshot { order: -1; width: 104px; } }
+:root[data-skin="terminal"] .headshot { filter: grayscale(1) sepia(.4) hue-rotate(70deg) saturate(1.6) contrast(1.05); }
+.hero h1 .dot { display: inline; color: var(--accent); }
+.role { font: 600 1.2rem/1.4 var(--font-body); color: var(--fg); }
+.lede { font-size: 1.12rem; max-width: 62ch; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.links a, .links span.ph {
+  font: 500 14px/1 var(--font-body);
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--fg);
+  background: var(--surface);
+}
+.links span.ph { color: var(--muted); border-style: dashed; }
+
+/* Section headers */
+section { display: grid; gap: 22px; }
+.sh { display: flex; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.sh h2 { font-size: clamp(1.6rem, 4.5vw, 2rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+.num { font-variant-numeric: tabular-nums; }
+.sh .count { font: 400 13px/1 var(--font-mono); color: var(--muted); }
+
+/* Experience ledger */
+.ledger { display: grid; gap: 28px; }
+.job { display: grid; grid-template-columns: 9.5rem 1fr; gap: 6px 24px; }
+.when { font: 400 13px/1.7 var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.job-body { min-width: 0; display: grid; gap: 6px; }
+.job h3 { font-size: 1.08rem; font-weight: 700; }
+.org { color: var(--muted); font-weight: 500; }
+.job ul { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+@media (max-width: 560px) { .job { grid-template-columns: 1fr; } }
+
+/* Projects */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 680px) { .projects { grid-template-columns: 1fr; } }
+.proj {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.proj .spec { margin-top: auto; }
+.proj.lead { grid-column: 1 / -1; }
+.tagrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tag { font: 500 11px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 4px 7px; border-radius: 4px; }
+
+/* Live project demos: the resting frame is the finished state; hover (or tap on touch) loops it. */
+.demo { position: relative; height: 120px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); overflow: hidden; margin-bottom: 4px; }
+.demo-cap { position: absolute; right: 8px; bottom: 6px; font: 500 10px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.demo-cap::after { content: "Demo"; }
+@media (prefers-reduced-motion: no-preference) {
+  .demo-cap::after { content: "Demo \00b7  hover to play"; }
+  .proj.playing .demo-cap::after { content: "Demo \00b7  playing"; }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: none) {
+  .demo-cap::after { content: "Demo \00b7  tap to play"; }
+}
+.proj:has(.demo) { cursor: default; }
+
+.d-rodin { height: auto; min-height: 120px; display: flex; gap: 14px; padding: 12px 14px 20px; align-items: center; }
+.d-rodin .chat { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bub { align-self: flex-start; max-width: 92%; font-size: 12.5px; line-height: 1.35; padding: 5px 10px; border-radius: 12px 12px 12px 3px; background: var(--surface); border: 1px solid var(--line); }
+.bub.b2 { align-self: flex-end; border-radius: 12px 12px 3px 12px; }
+.bub.bot { border-color: var(--accent); background: var(--accent-soft); }
+.cal { flex: 0 0 auto; width: 140px; height: 82px; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: auto 1fr; gap: 3px; }
+.cal span { font: 500 10px/1 var(--font-mono); color: var(--muted); text-align: center; }
+.cal i { position: relative; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); }
+.cal .slot { position: absolute; left: 2px; right: 2px; top: 45%; height: 28%; border-radius: 2px; background: var(--accent); transform-origin: top; }
+@media (max-width: 420px) { .cal { width: 98px; } }
+
+.d-dense svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.d-dense .dot { fill: var(--muted); opacity: .4; }
+.d-dense .nn line { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.d-dense .nn circle { fill: var(--accent); }
+.d-dense .ka { opacity: 0; }
+.d-dense .ka circle { fill: none; stroke: var(--flag); stroke-width: 1.6; }
+.d-dense .q { fill: var(--fg); }
+.d-dense .qring { fill: none; stroke: var(--fg); stroke-width: 1; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.d-dense .lab { position: absolute; left: 10px; top: 8px; font: 500 11px/1 var(--font-mono); }
+.d-dense .lab span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+.d-dense .la { color: var(--flag); opacity: 0; }
+.d-dense .lb { color: var(--accent); }
+
+.d-router { display: flex; flex-direction: column; justify-content: center; gap: 9px; padding: 12px 14px 20px; }
+.d-router .q { font: 500 12.5px/1.3 var(--font-mono); color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.d-router .tools { display: flex; flex-wrap: wrap; gap: 5px; }
+.d-router .tools span { font: 500 10.5px/1 var(--font-mono); padding: 5px 7px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); background: transparent; }
+.d-router .tools .hit { border-color: var(--accent); background: var(--accent-soft); color: var(--fg); }
+.d-router .ans { font: 500 12px/1 var(--font-mono); color: var(--accent); }
+
+.d-mcp { display: flex; align-items: center; gap: 10px; padding: 14px 14px 20px; }
+.d-mcp .node { flex: 0 0 auto; font: 500 11.5px/1 var(--font-mono); padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); white-space: nowrap; }
+.d-mcp .wire { flex: 1; min-width: 36px; position: relative; height: 2px; background: var(--line); }
+.d-mcp .call { position: absolute; bottom: 9px; left: 50%; transform: translateX(-50%); font: 500 10.5px/1 var(--font-mono); color: var(--muted); white-space: nowrap; }
+.d-mcp .pkt { position: absolute; top: -3px; left: calc(100% - 8px); width: 8px; height: 8px; border-radius: 50%; background: var(--accent); opacity: 0; }
+.d-mcp .bars { flex: 0 0 64px; height: 64px; display: flex; align-items: flex-end; gap: 5px; }
+.d-mcp .bars i { flex: 1; height: calc(var(--h) * 100%); background: var(--accent); border-radius: 2px 2px 0 0; transform-origin: bottom; }
+@media (max-width: 520px) {
+  .d-mcp { gap: 8px; }
+  .d-mcp .node { font-size: 10.5px; padding: 7px 8px; }
+  .d-mcp .call { display: none; }
+  .d-mcp .bars { flex-basis: 44px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes s1 { 0% { opacity: 0; transform: translateY(6px); } 6%, 88% { opacity: 1; transform: none; } 94%, 100% { opacity: 0; transform: none; } }
+  @keyframes s2 { 0%, 18% { opacity: 0; transform: translateY(6px); } 24%, 88% { opacity: 1; transform: none; } 94%, 100% { opacity: 0; transform: none; } }
+  @keyframes s3 { 0%, 34% { opacity: 0; transform: translateY(6px); } 40%, 88% { opacity: 1; transform: none; } 94%, 100% { opacity: 0; transform: none; } }
+  @keyframes s4 { 0%, 52% { opacity: 0; transform: translateY(6px); } 58%, 88% { opacity: 1; transform: none; } 94%, 100% { opacity: 0; transform: none; } }
+  @keyframes fade4 { 0%, 52% { opacity: 0; } 58%, 88% { opacity: 1; } 94%, 100% { opacity: 0; } }
+  @keyframes slot { 0%, 52% { opacity: 0; transform: scaleY(0); } 62%, 88% { opacity: 1; transform: none; } 94%, 100% { opacity: 0; transform: none; } }
+  @keyframes ka { 0% { opacity: 0; } 6%, 42% { opacity: 1; } 48%, 100% { opacity: 0; } }
+  @keyframes draw { 0%, 50% { stroke-dashoffset: 1; opacity: 1; } 62%, 88% { stroke-dashoffset: 0; opacity: 1; } 94%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+  @keyframes pulse { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(3.2); opacity: 0; } }
+  @keyframes type { 0%, 4% { clip-path: inset(0 100% 0 0); opacity: 1; } 30%, 88% { clip-path: inset(0 0 0 0); opacity: 1; } 94%, 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+  @keyframes flash { 0% { background: var(--accent-soft); border-color: var(--accent); color: var(--fg); } 8%, 100% { background: transparent; border-color: var(--line); color: var(--muted); } }
+  @keyframes lit { 0%, 54% { background: transparent; border-color: var(--line); color: var(--muted); } 60%, 88% { background: var(--accent-soft); border-color: var(--accent); color: var(--fg); } 94%, 100% { background: transparent; border-color: var(--line); color: var(--muted); } }
+  @keyframes travel { 0%, 28% { left: 0; opacity: 0; } 31% { left: 0; opacity: 1; } 46% { left: calc(100% - 8px); opacity: 1; } 50%, 100% { left: calc(100% - 8px); opacity: 0; } }
+  @keyframes grow { 0%, 48% { transform: scaleY(0); opacity: 1; } 62%, 88% { transform: scaleY(1); opacity: 1; } 94%, 100% { transform: scaleY(1); opacity: 0; } }
+
+  .proj.playing .d-rodin .b1 { animation: s1 5s infinite both; }
+  .proj.playing .d-rodin .b2 { animation: s2 5s infinite both; }
+  .proj.playing .d-rodin .b3 { animation: s3 5s infinite both; }
+  .proj.playing .d-rodin .slot { animation: slot 5s infinite both; }
+
+  .proj.playing .d-dense .ka, .proj.playing .d-dense .la { animation: ka 5s infinite both; }
+  .proj.playing .d-dense .nn circle, .proj.playing .d-dense .lb { animation: fade4 5s infinite both; }
+  .proj.playing .d-dense .nn line { animation: draw 5s infinite both; }
+  .proj.playing .d-dense .qring { animation: pulse 1.25s ease-out infinite; }
+
+  .proj.playing .d-router .q { animation: type 5s steps(28, end) infinite both; }
+  .proj.playing .d-router .c1 { animation: flash 5s 1.6s infinite; }
+  .proj.playing .d-router .c2 { animation: flash 5s 2s infinite; }
+  .proj.playing .d-router .hit { animation: lit 5s infinite both; }
+  .proj.playing .d-router .ans { animation: s4 5s infinite both; }
+
+  .proj.playing .d-mcp .call { animation: s1 5s infinite both; }
+  .proj.playing .d-mcp .pkt { animation: travel 5s ease-in-out infinite both; }
+  .proj.playing .d-mcp .bars i { animation: grow 5s infinite both; }
+  .proj.playing .d-mcp .bars i:nth-child(2) { animation-delay: .08s; }
+  .proj.playing .d-mcp .bars i:nth-child(3) { animation-delay: .16s; }
+  .proj.playing .d-mcp .bars i:nth-child(4) { animation-delay: .24s; }
+
+  /* Scroll reveals (the class is only added by script when motion is allowed) */
+  .rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .2, 1); transition-delay: var(--rd, 0s); }
+  .rv.in { opacity: 1; transform: none; }
+}
+.proj h3 { font-size: 1.15rem; font-weight: 700; }
+.proj p { color: var(--fg); }
+.spec {
+  font: 400 12.5px/1.6 var(--font-mono);
+  color: var(--muted);
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+  overflow-wrap: anywhere;
+}
+.spec b { color: var(--fg); font-weight: 500; }
+.plinks { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 14px/1.4 var(--font-body); }
+.finding { font-size: .95rem; color: var(--muted); }
+.earlier { display: grid; gap: 14px; margin-top: 8px; }
+.earlier h3 { font-size: 1rem; font-weight: 700; color: var(--muted); }
+.earlier ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.earlier li { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+.earlier li > div { min-width: 0; }
+.earlier .t { font-weight: 600; }
+.earlier .d { color: var(--muted); font-size: .95rem; }
+.earlier .s { font: 400 12px/1.6 var(--font-mono); color: var(--muted); }
+.earlier .l { font: 500 14px/1.6 var(--font-body); display: flex; gap: 12px; align-items: start; }
+@media (max-width: 560px) { .earlier li { grid-template-columns: 1fr; } }
+.finding strong { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Playground */
+.play { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 24px; }
+@media (max-width: 680px) { .play { grid-template-columns: 1fr; } }
+.play-intro { max-width: 62ch; color: var(--fg); }
+.play-intro .note { color: var(--muted); font-size: .9rem; }
+.controls { display: grid; gap: 14px; align-content: start; }
+.ctl { display: grid; gap: 4px; }
+.ctl label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 500; }
+.ctl output { font: 500 13px/1.5 var(--font-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.ctl input[type=range] { width: 100%; accent-color: var(--accent); }
+.rerun { justify-self: start; font: 500 14px/1 var(--font-body); padding: 9px 14px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--surface); cursor: pointer; }
+.rerun:hover { filter: brightness(1.08); }
+.viz { display: grid; gap: 14px; min-width: 0; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.stat .k { font: 500 11px/1.3 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.stat .v { font: 700 1.35rem/1.2 var(--font-display); font-variant-numeric: tabular-nums; }
+.stat.risk .v { color: var(--flag); }
+@media (max-width: 420px) { .stat .v { font-size: 1.1rem; } }
+#mc-chart { width: 100%; height: 260px; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 400 12px/1.4 var(--font-mono); color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 10px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; background: var(--accent); }
+.legend i.b50 { opacity: .35; } .legend i.b90 { opacity: .15; }
+.legend i.med { height: 2px; vertical-align: 3px; }
+.legend i.floor { height: 0; border-top: 2px dashed var(--flag); background: none; vertical-align: 3px; }
+
+/* Skills */
+.skills { display: grid; gap: 14px; }
+.skill { display: grid; grid-template-columns: 9.5rem 1fr; gap: 4px 24px; }
+.skill dt { font: 500 13px/1.9 var(--font-mono); color: var(--muted); }
+.skill dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.chip { font-size: 14px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+@media (max-width: 560px) { .skill { grid-template-columns: 1fr; } }
+
+/* Education */
+.edu { display: grid; gap: 16px; }
+.edu .row { display: grid; grid-template-columns: 9.5rem 1fr; gap: 2px 24px; }
+.edu .row div:last-child { min-width: 0; }
+.edu .sub { color: var(--muted); font-size: .95rem; }
+@media (max-width: 560px) { .edu .row { grid-template-columns: 1fr; } }
+
+/* Contact */
+.contact { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 14px; }
+.email { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.email code { font: 500 15px/1.4 var(--font-mono); user-select: all; overflow-wrap: anywhere; }
+button.copy {
+  font: 500 13px/1 var(--font-body); padding: 8px 12px; border-radius: 6px;
+  border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer;
+}
+button.copy:hover { background: var(--accent-soft); }
+footer { font: 400 12.5px/1.6 var(--font-mono); color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { button.copy { transition: background .15s; } }
+</style>
+<script>
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('ck-theme'); } catch (e) {}
+  if (t === 'light' || t === 'dark' || t === 'terminal') {
+    var r = document.documentElement;
+    r.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    if (t === 'terminal') r.setAttribute('data-skin', 'terminal');
+  }
+})();
+</script>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="topbar">
+      <div class="kicker">ATLANTA, GA &middot; BI &amp; DATA SCIENCE</div>
+      <div class="theme-switch" role="group" aria-label="Theme">
+        <button type="button" data-set="light" aria-pressed="false">Light</button>
+        <button type="button" data-set="dark" aria-pressed="false">Dark</button>
+        <button type="button" data-set="terminal" aria-pressed="false">Terminal</button>
+      </div>
+    </div>
+    <div class="hero-id">
+      <h1><span>Chase</span><span>Koronkowski<span class="dot">.</span></span></h1>
+      <img class="headshot" src="headshot.jpg" width="640" height="640" alt="Portrait of Chase Koronkowski">
+    </div>
+    <div class="role">Business Intelligence Analyst, Automation</div>
+    <p class="lede">I build the automation behind financial reporting. My background is in treasury, where I ran treasury systems, built ETL pipelines and built forecasting models for finance leadership. Outside of work I build with LLMs: retrieval systems, tool-using agents, and a group-planning assistant that runs over text messages.</p>
+    <nav class="links" aria-label="Profiles">
+      <a href="#projects">Projects</a>
+      <a href="#playground">Playground</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/chase-koronkowski">LinkedIn</a>
+      <a href="https://github.com/ChaseKoronkowski">GitHub</a>
+      <a href="Chase-Koronkowski-Resume.pdf">Resume (PDF)</a>
+    </nav>
+  </header>
+
+  <section id="experience" aria-labelledby="exp-h">
+    <div class="sh"><h2 id="exp-h">Experience</h2><span class="count"><span class="num" data-to="3">3</span> roles</span></div>
+    <div class="ledger">
+      <article class="job">
+        <div class="when">Mar 2026 to now</div>
+        <div class="job-body">
+          <h3>Business Intelligence Analyst, Automation <span class="org">&middot; Unum Group</span></h3>
+          <ul>
+            <li>Built shared data resources across the finance organization in Teradata SQL, creating a single source of truth for multiple recurring reports.</li>
+            <li>Automated manual Excel workflows, saving 200+ hours of monthly processing and reducing reporting errors.</li>
+            <li>Designed Tableau dashboards that gave leadership new visibility into claim trends and expense drivers.</li>
+            <li>Applied machine learning to complex financial datasets to find cost-saving opportunities, informing pilot programs for expense reduction.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="job">
+        <div class="when">May 2023 to Aug 2025</div>
+        <div class="job-body">
+          <h3>Senior Analyst, Treasury <span class="org">&middot; Floor &amp; Decor</span></h3>
+          <ul>
+            <li>Designed and deployed ETL pipelines that automated reporting workflows, saving 100+ hours of manual work a year.</li>
+            <li>Built bottom-up forecasting models with linear and non-linear techniques to support financial planning.</li>
+            <li>Maintained and improved the company cash forecast.</li>
+            <li>Delivered data-driven insights and recommendations to senior leadership.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="job">
+        <div class="when">2022 to May 2023</div>
+        <div class="job-body">
+          <h3>Systems Analyst, Treasury <span class="org">&middot; Inspire Brands</span></h3>
+          <ul>
+            <li>Managed treasury software and database administration, leading upgrades, access governance and audit support.</li>
+            <li>Served as subject matter expert on core treasury systems.</li>
+            <li>Built and maintained automation for treasury fintech systems, kept refining matching logic, and ran KPI dashboard reporting.</li>
+            <li>Worked with accounting and IT on automation, database design and Oracle Cloud data workflow integration.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects" aria-labelledby="proj-h">
+    <div class="sh"><h2 id="proj-h">Projects</h2><span class="count"><span class="num" data-to="4">4</span> featured</span></div>
+    <div class="projects">
+
+      <article class="proj lead">
+        <div class="demo d-rodin" aria-hidden="true">
+          <div class="chat">
+            <span class="bub b1 bot">Rodin: Dinner Fri 7 PM. Reply Y or N</span>
+            <span class="bub b2">Y</span>
+            <span class="bub b3 bot">You're in. It's on the group calendar.</span>
+          </div>
+          <div class="cal">
+            <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            <i></i><i></i><i></i><i></i><i><b class="slot"></b></i><i></i><i></i>
+          </div>
+          <span class="demo-cap"></span>
+        </div>
+        <div class="tagrow"><span class="tag">Agents</span><span class="tag">In progress</span></div>
+        <h3>Rodin: a group-planning assistant you text</h3>
+        <p>A planning assistant for two friend groups that works over plain text messages. It sends event invites, collects Y/N RSVPs, reminds anyone who hasn't answered, posts change notices and a weekly summary, and keeps each group's Google Calendar current. It also covers birthdays, holiday messages and Georgia election and ballot reminders.</p>
+        <p class="finding">It started on Telegram, then moved to SMS through Twilio, with STOP and HELP opt-outs, because friends didn't want another app.</p>
+        <div class="spec"><b>Runtime</b> Google Apps Script &middot; <b>Data</b> Google Calendar &middot; <b>Messaging</b> Twilio SMS (Telegram first)</div>
+      </article>
+
+      <article class="proj">
+        <div class="demo d-dense" aria-hidden="true">
+          <svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid meet"><g class="dots"></g><g class="nn"></g><g class="ka"></g><circle class="qring" cx="150" cy="64" r="5"></circle><circle class="q" cx="150" cy="64" r="4.5"></circle></svg>
+          <div class="lab"><span class="la">TF-IDF: shared keywords</span><span class="lb">Embeddings: 5 nearest</span></div>
+          <span class="demo-cap"></span>
+        </div>
+        <div class="tagrow"><span class="tag">Retrieval</span><span class="tag">NLP</span></div>
+        <h3>Sparse vs. dense semantic search</h3>
+        <p>Compared a TF-IDF retriever (unigrams and bigrams) with dense embeddings from all-MiniLM-L6-v2 in a FAISS index. Generated test queries from the corpus itself and scored hit@5 to show where keyword matching wins, where embeddings win, and where both miss.</p>
+        <div class="spec"><b>Data</b> 20 Newsgroups and GovDocs1 samples, ~<span class="num" data-to="1000">1,000</span> docs &middot; <b>Stack</b> scikit-learn, sentence-transformers, FAISS</div>
+      </article>
+
+      <article class="proj">
+        <div class="demo d-router" aria-hidden="true">
+          <div class="q">&ldquo;Which neighborhood is the best value?&rdquo;</div>
+          <div class="tools"><span class="c1">Summaries</span><span class="c2">Search</span><span class="hit">Value index</span><span>Compare</span><span>Correlations</span></div>
+          <div class="ans">&rarr; routed to Value index</div>
+          <span class="demo-cap"></span>
+        </div>
+        <div class="tagrow"><span class="tag">Agents</span><span class="tag">Tabular</span></div>
+        <h3>Tool-using housing analyst</h3>
+        <p>A set of deterministic tools over the Ames Housing data (neighborhood summaries, filtered search, a value index, side-by-side comparisons, price correlations) with a ReAct-style router that maps plain-English questions to the right tool. It serves as the no-memory baseline for an agentic memory study.</p>
+        <p class="finding">Overall quality was the strongest single correlate of sale price (<strong>r = <span class="num" data-to="0.80" data-dec="2">0.80</span></strong>), ahead of living area (<strong><span class="num" data-to="0.71" data-dec="2">0.71</span></strong>).</p>
+        <div class="spec"><b>Data</b> Ames Housing, <span class="num" data-to="2930">2,930</span> homes &times; <span class="num" data-to="82">82</span> columns &middot; <b>Stack</b> Python, pandas, NumPy</div>
+      </article>
+
+      <article class="proj lead">
+        <div class="demo d-mcp" aria-hidden="true">
+          <div class="node">LLM client</div>
+          <div class="wire"><span class="call">count brand mentions</span><i class="pkt"></i></div>
+          <div class="node">MCP server</div>
+          <div class="bars"><i style="--h:.92"></i><i style="--h:.6"></i><i style="--h:.38"></i><i style="--h:.22"></i></div>
+          <span class="demo-cap"></span>
+        </div>
+        <div class="tagrow"><span class="tag">MCP</span><span class="tag">LLM tooling</span></div>
+        <h3>Review analytics as an MCP server</h3>
+        <p>Wrapped a product review dataset in a FastMCP server so an LLM client can call analysis tools directly instead of reading raw text, starting with a brand-mention counter.</p>
+        <div class="spec"><b>Data</b> Amazon product reviews &middot; <b>Stack</b> FastMCP, pandas</div>
+      </article>
+
+    </div>
+
+    <div class="earlier">
+      <h3>Earlier work</h3>
+      <ul>
+        <li>
+          <div>
+            <div class="t">Time series modeling of sales data</div>
+            <div class="d">Machine learning sales forecast built on Rohlik grocery sales data from Kaggle, with a focus on adjusting for seasonality.</div>
+            <div class="s">Python &middot; XGBoost</div>
+          </div>
+          <div class="l"><a href="https://www.datascienceportfol.io/chasekoronkowski/projects/2">Details</a><a href="https://www.kaggle.com/competitions/rohlik-sales-forecasting-challenge-v2">Dataset</a></div>
+        </li>
+        <li>
+          <div>
+            <div class="t">Topic modeling of franchise agreements</div>
+            <div class="d">Word clouds and frequency vs. embedding topic models across <span class="num" data-to="55">55</span> franchise agreements.</div>
+            <div class="s">BoW &middot; n-grams &middot; TF-IDF &middot; embeddings</div>
+          </div>
+          <div class="l"><a href="https://www.datascienceportfol.io/chasekoronkowski/projects/1">Details</a><a href="https://github.com/ChaseKoronkowski/MSA-8600">Code</a></div>
+        </li>
+        <li>
+          <div>
+            <div class="t">Sales dashboard and web app</div>
+            <div class="d">E-commerce database with product browsing, orders and reviews, plus a Tableau dashboard of purchase trends.</div>
+            <div class="s">MySQL &middot; Python &middot; Flet &middot; Tableau</div>
+          </div>
+          <div class="l"><a href="https://www.datascienceportfol.io/chasekoronkowski/projects/0">Details</a></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="playground" aria-labelledby="play-h">
+    <div class="sh"><h2 id="play-h">Playground</h2><span class="count">13-week cash forecast</span></div>
+    <div class="play-intro">
+      <p>Treasury teams plan around a 13-week cash forecast. This one runs <span class="num" data-to="600">600</span> simulated quarters in your browser. Drag the sliders to see how volatility and month-end payroll change the odds of dipping below your minimum cash.</p>
+      <p class="note">Illustrative numbers in thousands of dollars, not real company data.</p>
+    </div>
+    <div class="play">
+      <div class="controls">
+        <div class="ctl"><label for="mc-start">Starting cash <output id="mc-start-o"></output></label><input type="range" id="mc-start" min="0" max="1500" step="25" value="500"></div>
+        <div class="ctl"><label for="mc-mu">Avg weekly net inflow <output id="mc-mu-o"></output></label><input type="range" id="mc-mu" min="-50" max="150" step="5" value="40"></div>
+        <div class="ctl"><label for="mc-sd">Weekly volatility <output id="mc-sd-o"></output></label><input type="range" id="mc-sd" min="0" max="200" step="5" value="60"></div>
+        <div class="ctl"><label for="mc-pay">Month-end payroll <output id="mc-pay-o"></output></label><input type="range" id="mc-pay" min="0" max="400" step="10" value="150"></div>
+        <div class="ctl"><label for="mc-floor">Minimum cash <output id="mc-floor-o"></output></label><input type="range" id="mc-floor" min="0" max="800" step="25" value="250"></div>
+        <button class="rerun" id="mc-rerun" type="button">Run again</button>
+      </div>
+      <div class="viz">
+        <div class="stats" aria-live="polite">
+          <div class="stat risk"><span class="k">Odds of breach</span><span class="v" id="mc-p">0%</span></div>
+          <div class="stat"><span class="k">Median, wk 13</span><span class="v" id="mc-med">$0K</span></div>
+          <div class="stat"><span class="k">Bad case, wk 13</span><span class="v" id="mc-p5">$0K</span></div>
+        </div>
+        <canvas id="mc-chart" role="img" aria-label="Fan chart of simulated cash balances over 13 weeks"></canvas>
+        <div class="legend"><span><i class="med"></i>Median</span><span><i class="b50"></i>Middle 50%</span><span><i class="b90"></i>90% range</span><span><i class="floor"></i>Minimum cash</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-h">
+    <div class="sh"><h2 id="skills-h">Skills</h2></div>
+    <dl class="skills">
+      <div class="skill"><dt>BI &amp; reporting</dt><dd><span class="chip">SQL (Teradata, MySQL)</span><span class="chip">Tableau</span><span class="chip">Power BI</span><span class="chip">Excel</span><span class="chip">ETL pipelines</span></dd></div>
+      <div class="skill"><dt>Modeling</dt><dd><span class="chip">Time series forecasting</span><span class="chip">XGBoost</span><span class="chip">Topic modeling</span><span class="chip">Python</span><span class="chip">R</span><span class="chip">SAS</span></dd></div>
+      <div class="skill"><dt>Automation</dt><dd><span class="chip">PowerShell</span><span class="chip">Batch</span><span class="chip">Power Automate</span><span class="chip">Azure</span></dd></div>
+      <div class="skill"><dt>AI &amp; NLP</dt><dd><span class="chip">RAG</span><span class="chip">Agentic workflows</span><span class="chip">Prompt engineering</span><span class="chip">MCP</span><span class="chip">TF-IDF &amp; n-grams</span><span class="chip">SVM</span><span class="chip">Embeddings</span></dd></div>
+      <div class="skill"><dt>Databases</dt><dd><span class="chip">MongoDB</span><span class="chip">Neo4j</span><span class="chip">Qdrant</span><span class="chip">FAISS</span></dd></div>
+      <div class="skill"><dt>Python</dt><dd><span class="chip">pandas</span><span class="chip">scikit-learn</span><span class="chip">sentence-transformers</span><span class="chip">spaCy</span></dd></div>
+      <div class="skill"><dt>Systems</dt><dd><span class="chip">Treasury management systems</span><span class="chip">Oracle Cloud integration</span><span class="chip">Access governance</span></dd></div>
+    </dl>
+  </section>
+
+  <section id="education" aria-labelledby="edu-h">
+    <div class="sh"><h2 id="edu-h">Education</h2></div>
+    <div class="edu">
+      <div class="row"><div class="when">Dec 2025</div><div><strong>Master of Science, Data Science and Analytics</strong>, Georgia State University</div></div>
+      <div class="row"><div class="when">Dec 2021</div><div><strong>BBA in Economics</strong>, Mississippi State University</div></div>
+      <div class="row"><div class="when">Certificate</div><div><strong>Artificial Intelligence Business Innovation</strong>, Georgia State University, Robinson College of Business<div class="sub">Graduate certificate focused on generative AI, RAG pipelines and agent-based system design, with hands-on development of LLM-driven applications.</div></div></div>
+      <div class="row"><div class="when">Certificate</div><div><strong>Data Science in Healthcare</strong>, Dartmouth, Geisel School of Medicine<div class="sub">Projects to improve outcomes for diabetes patients using data wrangling, visualization, linear and logistic regression, PCA, Bayesian statistics and social network analysis.</div></div></div>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h">
+    <div class="sh"><h2 id="contact-h">Contact</h2></div>
+    <div class="contact">
+      <p>Open to conversations about BI automation, analytics engineering and applied AI.</p>
+      <div class="email">
+        <code id="email-addr">chase.koronkowski@gmail.com</code>
+        <button class="copy" id="copy-btn" type="button">Copy email</button>
+      </div>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/chase-koronkowski">LinkedIn</a>
+        <a href="https://github.com/ChaseKoronkowski">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>Atlanta, GA &middot; Updated November 2026</footer>
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-btn');
+  var addr = document.getElementById('email-addr');
+  btn.addEventListener('click', function () {
+    var text = addr.textContent;
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy email'; }, 1600); };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(addr);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selected, press copy';
+    };
+    try {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+<script>
+(function () {
+  var N = 600, WEEKS = 13, PAYROLL_WEEKS = { 4: 1, 9: 1, 13: 1 };
+  var ids = ['mc-start', 'mc-mu', 'mc-sd', 'mc-pay', 'mc-floor'];
+  var canvas = document.getElementById('mc-chart');
+  var ctx = canvas.getContext('2d');
+  var seed = 20261110, sim = null;
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function gauss(r) { var u = 1 - r(), v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  function fmt(k) {
+    var s = k < 0 ? '-$' : '$', a = Math.abs(k);
+    return a >= 1000 ? s + (a / 1000).toFixed(2) + 'M' : s + Math.round(a) + 'K';
+  }
+  function read() {
+    var o = {};
+    ids.forEach(function (id) { o[id.slice(3)] = parseFloat(document.getElementById(id).value); });
+    return o;
+  }
+  function quantile(sorted, q) {
+    var pos = (sorted.length - 1) * q, lo = Math.floor(pos), hi = Math.ceil(pos);
+    return sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+  }
+
+  function simulate() {
+    var v = read(), r = mulberry32(seed), cols = [], samples = [], breaches = 0;
+    for (var w = 0; w <= WEEKS; w++) cols.push([]);
+    for (var i = 0; i < N; i++) {
+      var bal = v.start, hit = bal < v.floor, path = [bal];
+      cols[0].push(bal);
+      for (var wk = 1; wk <= WEEKS; wk++) {
+        var flow = v.mu + v.sd * gauss(r);
+        if (PAYROLL_WEEKS[wk]) flow -= v.pay;
+        bal += flow;
+        path.push(bal);
+        cols[wk].push(bal);
+        if (bal < v.floor) hit = true;
+      }
+      if (hit) breaches++;
+      if (i < 24) samples.push(path);
+    }
+    var bands = cols.map(function (c) {
+      c.sort(function (a, b) { return a - b; });
+      return { p5: quantile(c, .05), p25: quantile(c, .25), p50: quantile(c, .5), p75: quantile(c, .75), p95: quantile(c, .95) };
+    });
+    sim = { v: v, bands: bands, samples: samples, pBreach: breaches / N };
+    document.getElementById('mc-p').textContent = Math.round(sim.pBreach * 100) + '%';
+    document.getElementById('mc-med').textContent = fmt(bands[WEEKS].p50);
+    document.getElementById('mc-p5').textContent = fmt(bands[WEEKS].p5);
+  }
+
+  function niceStep(span) {
+    var raw = span / 4, mag = Math.pow(10, Math.floor(Math.log10(Math.max(raw, 1e-9)))), n = raw / mag;
+    return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10) * mag;
+  }
+
+  function draw() {
+    if (!sim) return;
+    var cs = getComputedStyle(document.documentElement);
+    var col = function (n) { return cs.getPropertyValue(n).trim(); };
+    var accent = col('--accent'), muted = col('--muted'), line = col('--line'), flag = col('--flag');
+    var w = canvas.clientWidth, h = canvas.clientHeight, dpr = window.devicePixelRatio || 1;
+    if (!w || !h) return;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    var m = { l: 56, r: 10, t: 10, b: 26 };
+    var b = sim.bands, lo = Infinity, hi = -Infinity;
+    b.forEach(function (q) { lo = Math.min(lo, q.p5); hi = Math.max(hi, q.p95); });
+    lo = Math.min(lo, sim.v.floor); hi = Math.max(hi, sim.v.floor);
+    if (hi - lo < 50) { hi += 25; lo -= 25; }
+    var step = niceStep(hi - lo);
+    lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+    var X = function (wk) { return m.l + (w - m.l - m.r) * wk / WEEKS; };
+    var Y = function (val) { return m.t + (h - m.t - m.b) * (1 - (val - lo) / (hi - lo)); };
+
+    ctx.font = '12px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.fillStyle = muted; ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    for (var t = lo; t <= hi + 1e-6; t += step) {
+      var y = Math.round(Y(t)) + .5;
+      ctx.beginPath(); ctx.moveTo(m.l, y); ctx.lineTo(w - m.r, y); ctx.stroke();
+      ctx.fillText(fmt(t), m.l - 8, y);
+    }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    [0, 4, 9, 13].forEach(function (wk) { ctx.fillText(wk === 0 ? 'Now' : 'Wk ' + wk, X(wk), h - m.b + 8); });
+
+    function band(a, z, alpha) {
+      ctx.beginPath();
+      b.forEach(function (q, i) { var px = X(i), py = Y(q[a]); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+      for (var i = WEEKS; i >= 0; i--) ctx.lineTo(X(i), Y(b[i][z]));
+      ctx.closePath(); ctx.globalAlpha = alpha; ctx.fillStyle = accent; ctx.fill(); ctx.globalAlpha = 1;
+    }
+    band('p5', 'p95', .14);
+    band('p25', 'p75', .30);
+
+    ctx.strokeStyle = accent; ctx.globalAlpha = .18; ctx.lineWidth = 1;
+    sim.samples.forEach(function (p) {
+      ctx.beginPath();
+      p.forEach(function (val, i) { i ? ctx.lineTo(X(i), Y(val)) : ctx.moveTo(X(i), Y(val)); });
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+
+    ctx.setLineDash([5, 4]); ctx.strokeStyle = flag; ctx.lineWidth = 1.5;
+    var fy = Y(sim.v.floor);
+    ctx.beginPath(); ctx.moveTo(m.l, fy); ctx.lineTo(w - m.r, fy); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.strokeStyle = accent; ctx.lineWidth = 2.25;
+    ctx.beginPath();
+    b.forEach(function (q, i) { i ? ctx.lineTo(X(i), Y(q.p50)) : ctx.moveTo(X(i), Y(q.p50)); });
+    ctx.stroke();
+    ctx.fillStyle = accent;
+    ctx.beginPath(); ctx.arc(X(WEEKS), Y(b[WEEKS].p50), 3.5, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function labels() {
+    var v = read();
+    document.getElementById('mc-start-o').textContent = fmt(v.start);
+    document.getElementById('mc-mu-o').textContent = fmt(v.mu) + '/wk';
+    document.getElementById('mc-sd-o').textContent = '±' + fmt(v.sd);
+    document.getElementById('mc-pay-o').textContent = fmt(v.pay);
+    document.getElementById('mc-floor-o').textContent = fmt(v.floor);
+  }
+  function update() { labels(); simulate(); draw(); }
+
+  ids.forEach(function (id) { document.getElementById(id).addEventListener('input', update); });
+  document.getElementById('mc-rerun').addEventListener('click', function () { seed = (seed * 1103515245 + 12345) >>> 0; update(); });
+  if (window.ResizeObserver) new ResizeObserver(draw).observe(canvas); else window.addEventListener('resize', draw);
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw); } catch (e) {}
+  new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-skin'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  update();
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  var motionOK = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* Theme switch: light, dark, terminal; remembered per visitor where storage works. */
+  var btns = [].slice.call(document.querySelectorAll('.theme-switch button'));
+  var darkMQ = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function current() {
+    if (root.getAttribute('data-skin') === 'terminal') return 'terminal';
+    var d = root.getAttribute('data-theme');
+    if (d === 'light' || d === 'dark') return d;
+    return darkMQ && darkMQ.matches ? 'dark' : 'light';
+  }
+  function sync() {
+    var c = current();
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set') === c)); });
+  }
+  function apply(t) {
+    root.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    if (t === 'terminal') root.setAttribute('data-skin', 'terminal'); else root.removeAttribute('data-skin');
+    try { localStorage.setItem('ck-theme', t); } catch (e) {}
+    sync();
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { apply(b.getAttribute('data-set')); }); });
+  try { darkMQ.addEventListener('change', sync); } catch (e) {}
+  new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme', 'data-skin'] });
+  sync();
+
+  /* Retrieval demo: a seeded scatter, the query, its 5 nearest neighbors, and 5 keyword hits. */
+  var svg = document.querySelector('.d-dense svg');
+  if (svg) {
+    var NS = 'http://www.w3.org/2000/svg', qx = 150, qy = 64, a = 7, pts = [];
+    var rnd = function () { a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    while (pts.length < 30) {
+      var x = 14 + rnd() * 272, y = 24 + rnd() * 88;
+      if (Math.hypot(x - qx, y - qy) > 16) pts.push({ x: x, y: y, d: Math.hypot(x - qx, y - qy) });
+    }
+    var el = function (tag, attrs, parent) { var n = document.createElementNS(NS, tag); for (var k in attrs) n.setAttribute(k, attrs[k]); parent.appendChild(n); return n; };
+    var gDots = svg.querySelector('.dots'), gNN = svg.querySelector('.nn'), gKA = svg.querySelector('.ka');
+    pts.forEach(function (p) { el('circle', { cx: p.x, cy: p.y, r: 3, 'class': 'dot' }, gDots); });
+    var byDist = pts.slice().sort(function (m, n) { return m.d - n.d; });
+    byDist.slice(0, 5).forEach(function (p) { el('line', { x1: qx, y1: qy, x2: p.x, y2: p.y, pathLength: 1 }, gNN); });
+    byDist.slice(0, 5).forEach(function (p) { el('circle', { cx: p.x, cy: p.y, r: 3.6 }, gNN); });
+    [1, 4, 13, 21, 28].forEach(function (i) { var p = byDist[i]; el('circle', { cx: p.x, cy: p.y, r: 6 }, gKA); });
+  }
+
+  /* Live project cards: play on mouse hover, toggle on tap. */
+  [].slice.call(document.querySelectorAll('.proj')).forEach(function (card) {
+    if (!card.querySelector('.demo')) return;
+    var lastType = 'mouse';
+    card.addEventListener('pointerdown', function (e) { lastType = e.pointerType; });
+    card.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') card.classList.add('playing'); });
+    card.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') card.classList.remove('playing'); });
+    card.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a')) return;
+      if (lastType !== 'mouse') card.classList.toggle('playing');
+    });
+  });
+
+  if (!motionOK || !('IntersectionObserver' in window)) return;
+
+  /* Scroll reveals, staggered within each group. */
+  var groups = [document.querySelectorAll('main > section, .wrap > section'), document.querySelectorAll('.proj'), document.querySelectorAll('.job'), document.querySelectorAll('.earlier li')];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.05, rootMargin: '0px 0px -6% 0px' });
+  groups.forEach(function (list) {
+    [].slice.call(list).forEach(function (n, i) {
+      if (n.closest('section') && n.tagName !== 'SECTION') n.style.setProperty('--rd', (i % 4) * 70 + 'ms');
+      n.classList.add('rv');
+      io.observe(n);
+    });
+  });
+  window.addEventListener('beforeprint', function () { [].slice.call(document.querySelectorAll('.rv')).forEach(function (n) { n.classList.add('in'); }); });
+
+  /* Key numbers count up the first time they scroll into view. */
+  var countIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      countIO.unobserve(en.target);
+      var n = en.target, to = parseFloat(n.getAttribute('data-to')), dec = parseInt(n.getAttribute('data-dec') || '0', 10), t0 = null;
+      var f = function (v) { return v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec }); };
+      var step = function (ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min(1, (ts - t0) / 1100), e = 1 - Math.pow(1 - p, 3);
+        n.textContent = f(to * e);
+        if (p < 1) requestAnimationFrame(step); else n.textContent = f(to);
+      };
+      n.textContent = f(0);
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 1 });
+  [].slice.call(document.querySelectorAll('.num[data-to]')).forEach(function (n) { countIO.observe(n); });
+})();
+</script>
+</body>
+</html>
