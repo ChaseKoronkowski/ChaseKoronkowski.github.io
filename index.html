@@ -381,8 +381,17 @@ footer { font: 400 12.5px/1.6 var(--font-mono); color: var(--muted); }
   </header>
 
   <section id="projects" aria-labelledby="proj-h">
-    <div class="sh"><h2 id="proj-h">Projects</h2><span class="count"><span class="num" data-to="4">4</span> featured</span></div>
+    <div class="sh"><h2 id="proj-h">Projects</h2><span class="count"><span class="num" data-to="5">5</span> featured</span></div>
     <div class="projects">
+
+      <article class="proj lead">
+        <div class="tagrow"><span class="tag">Clustering</span><span class="tag">Benchmark</span></div>
+        <h3>e-means vs. k-means, benchmarked</h3>
+        <p>Rebuilt e-means, a new clustering optimizer from FAIR at Meta, from scratch in NumPy, then raced it against Lloyd's k-means in seven scenarios chosen so each method could win, tie or fail.</p>
+        <p class="finding">With 1,024 clusters in 64 dimensions, e-means matched k-means' loss about <strong>20x</strong> faster and ended <strong>9%</strong> lower. On Fashion-MNIST its speedup grew from <strong>3.8x</strong> to <strong>6.7x</strong> as clusters rose from 16 to 2,048. It doesn't help with non-round clusters, and mini-batch k-means beat both on very uneven cluster sizes.</p>
+        <div class="plinks"><a href="projects/e-means.html">Read the illustrated explainer</a></div>
+        <div class="spec"><b>Data</b> Fashion-MNIST, synthetic Gaussian mixtures, photo colors &middot; <b>Stack</b> NumPy, Faiss, scikit-learn</div>
+      </article>
 
       <article class="proj lead">
         <div class="demo d-rodin" aria-hidden="true">
